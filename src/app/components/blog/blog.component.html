@@ -1,0 +1,51 @@
+<section id="blog" [hidden]="virtualRouter.routerActive!=='blog'">
+  
+    <div class="container">
+
+      <h2 class="section-title wow fadeInUp">Publicaciones recientes
+        <span style="color: #FF4C60;" class="icon icon-plus iconB" (click)="newPost()"></span></h2>
+
+      <div class="spacer" data-height="60"></div>
+
+      <div class="row blog-wrapper" > 
+        <div class="col-md-4" *ngFor="let post of global.posts; let i = index " style="cursor: pointer;">
+     
+          <div class="blog-item rounded bg-white shadow-dark wow fadeIn">
+            <!-- <div class="float-right-corner"   [hidden]="isMouseOverCard && i !== mouseOverIndex" > -->
+              <div  class="actions">
+
+                <span style="font-weight: 1000; font-size: 15px; ">
+                    <button type="submit" name="submit" id="submit" value="Submit"
+                        class="btn btn-dark btn-xs">
+                        <span class="icon icon-pencil" style=" color: white;"></span>
+                    </button>
+                </span>
+                <span style="font-weight: 1000; font-size: 15px; color: white; padding-left: 5px;">
+                    <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-default btn-xs"
+                        (click)="beforeDelete(post.id)">
+                        <span class="icon icon-trash" style=" color: white;"></span>
+                    </button>
+                </span>
+            </div>
+            <div class="thumb" >
+              
+              <a href="#">
+                <img src="{{post.img}}" alt="blog-title" />
+              </a>
+            </div>
+            <div class="details">
+              <h4 class="my-0 title"><a href="#">{{post.title}}</a></h4>
+              <ul class="list-inline meta mb-0 mt-2">
+            <li class="list-inline-item">{{post.autor}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+       
+
+      </div>
+
+    </div>
+
+  </section>

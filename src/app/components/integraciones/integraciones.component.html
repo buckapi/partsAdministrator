@@ -1,0 +1,85 @@
+<section id="integraciones" [hidden]="virtualRouter.routerActive!=='integraciones'">
+    <div class="container">
+        <h2 class="section-title wow fadeIn">Integraciones
+            <span style="color: #FF4C60;" class="icon icon-plus iconB" (click)="edit()"></span>
+        </h2>
+        <div class="spacer" data-height="60"></div>
+        <div class="row" [hidden]="editing">
+            
+            <div class="row portfolio-wrapper col-md-8">
+                <div class="col-md-4 pr-md-0 mt-md-4 mt-0"
+                    *ngFor="let integration of global.integrations; let i = index" style="cursor: pointer;">
+                    <div  class="actions">
+
+                        <span style="font-weight: 1000; font-size: 15px; ">
+                            <button type="submit" name="submit" id="submit" value="Submit"
+                                class="btn btn-dark btn-xs">
+                                <span class="icon icon-pencil" style=" color: white;"></span>
+                            </button>
+                        </span>
+                        <span style="font-weight: 1000; font-size: 15px; color: white; padding-left: 5px;">
+                            <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-default btn-xs"
+                                (click)="beforeDelete(integration.id)">
+                                <span class="icon icon-trash" style=" color: white;"></span>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="price-item bg-white rounded shadow-dark text-center">
+                        <img src="{{integration.images[0]}}" alt="Regular" />
+                        <h2 class="plan">{{integration.name}}</h2>
+                    </div>
+                </div>
+            </div>
+           
+            <!-- <div class="col-md-4 ">
+                <div class="contact-info">
+                    <h3 class="wow fadeInUp">{{global.integrationSelected.name}}</h3>
+                    <div class="thumb">
+                        <img src="{{global.integrationSelected.images[0]}}" alt="" />
+                        <div class="mask"></div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <div class="col-md-12 " [hidden]="!editing">
+            <div class="contact-info">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="">
+                                <div class="">
+                                    <ngx-awesome-uploader 
+                                    [adapter]="adapter" 
+                                    [captions]="captions"
+                                    [showPreviewContainer]="false">
+                                    </ngx-awesome-uploader>
+                                    <span *ngFor="let image of _butler.uploaderImages">
+                                        <img src="{{image}}" alt="" style="max-width: 100px; padding: 2%; border-radius: 15px;"> <br />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="">
+                                <div class="">
+                                    <div class="form-group">
+                                        <label for="event-name">Nombre de la integración</label>
+                                        <input class="form-control" placeholder="Nombre" type="text"
+                                            [(ngModel)]="data.name" name="name" required
+                                            [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="popup-box-actions medium void" style="text-align: end;">
+                        <button class="btn btn-default" id="closeButton" (click)="onSubmit()" style=" margin-right: 10px;">Guardar</button>
+                        <button class="btn btn-dark" id="closeButton"
+                            (click)="cancelarUpdate()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

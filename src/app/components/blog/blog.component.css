@@ -1,0 +1,45 @@
+.icon {
+    color: #FF4C60;
+  }
+  
+  /* Estilo al pasar el mouse sobre el elemento */
+  .icon:hover {
+    cursor: pointer;
+    color: blue !important; /* Cambia 'blue' por el color que desees */
+    /* También puedes aplicar otros estilos además del color */
+    /* Por ejemplo: background-color, tamaño de fuente, etc. */
+  }
+
+  .iconB {
+    color: #FF4C60;
+  }
+  
+  /* Estilo al pasar el mouse sobre el elemento */
+  .iconB:hover {
+    cursor: pointer;
+    color: black !important; /* Cambia 'blue' por el color que desees */
+    /* También puedes aplicar otros estilos además del color */
+    /* Por ejemplo: background-color, tamaño de fuente, etc. */
+  }
+  .float-right-corner {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    visibility: hidden; /* Ocultar el bloque inicialmente */
+  }
+  
+  .float-right-corner.show {
+    visibility: visible; /* Mostrar el bloque cuando tiene la clase 'show' */
+  }
+  .blog-item {
+    position: relative;
+  }
+  
+  .actions {
+    z-index: 2000;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+  }

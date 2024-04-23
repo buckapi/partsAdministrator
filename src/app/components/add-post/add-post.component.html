@@ -1,0 +1,51 @@
+<!-- <div class="col-md-12 ">
+  
+  <div class="">
+      <div class="">
+          <div class="form-group">
+              <label for="event-name">Titulo</label>
+              <input class="form-control" placeholder="nombre" type="text"
+                  [(ngModel)]="data.title" name="title" required
+                  [ngModelOptions]="{standalone: true}">
+          </div>
+      </div>
+  </div>
+  <div class="">
+    <div class="">
+        <div class="form-group">
+            <label for="event-name">Autor</label>
+            <input class="form-control" placeholder="nombre" type="text"
+                [(ngModel)]="data.autor" name="autor" required
+                [ngModelOptions]="{standalone: true}">
+        </div>
+    </div>
+</div>
+</div> -->
+
+<quill-editor [hidden]="virtualRouter.routerActive!=='addpost'">
+    <div above-quill-editor-toolbar>
+      above
+    </div>
+    <div quill-editor-toolbar>
+      <span class="ql-formats">
+        <button class="ql-bold" [title]="'Bold'"></button>
+      </span>
+      <span class="ql-formats">
+        <select class="ql-align" [title]="'Aligment'">
+          <option selected></option>
+          <option value="center"></option>
+          <option value="right"></option>
+          <option value="justify"></option>
+        </select>
+        <select class="ql-align" [title]="'Aligment2'">
+          <option selected></option>
+          <option value="center"></option>
+          <option value="right"></option>
+          <option value="justify"></option>
+        </select>
+      </span>
+    </div>
+    <div below-quill-editor-toolbar>
+      below
+    </div>
+  </quill-editor>

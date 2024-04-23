@@ -1,0 +1,23 @@
+.icon {
+    color: #FF4C60;
+  }
+  
+  /* Estilo al pasar el mouse sobre el elemento */
+  .icon:hover {
+    cursor: pointer;
+    color: blue !important; /* Cambia 'blue' por el color que desees */
+    /* También puedes aplicar otros estilos además del color */
+    /* Por ejemplo: background-color, tamaño de fuente, etc. */
+  }
+
+  .iconB {
+    color: #FF4C60;
+  }
+  
+  /* Estilo al pasar el mouse sobre el elemento */
+  .iconB:hover {
+    cursor: pointer;
+    color: black !important; /* Cambia 'blue' por el color que desees */
+    /* También puedes aplicar otros estilos además del color */
+    /* Por ejemplo: background-color, tamaño de fuente, etc. */
+  }
