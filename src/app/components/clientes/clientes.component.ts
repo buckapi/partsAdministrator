@@ -18,13 +18,14 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 export class ClientesComponent {
   editing = false;
+  adding = false;
   isEditing = false;
   category = 'Seleccione una';
   categorySeted: boolean = false;
   clients$: any = {};
   public captions: UploaderCaptions = {
     dropzone: {
-      title: 'Imágenes del cliente',
+      title: 'Imágenes del producto',
       or: '.',
       browse: 'Cargar',
     },
@@ -40,8 +41,8 @@ export class ClientesComponent {
   data = {
     images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
     name: '',
-    ref: '',
-    idCategory: '',
+    price:0,
+    category: '',
   };
 
   adapter = new DemoFilePickerAdapter(this.http, this._butler)
@@ -56,11 +57,32 @@ export class ClientesComponent {
   ) {
     this.getAllCategories();
   }
-  edit() {
+  add(){
+    this.global.clientSelected={ name: "Seleccione una autoparte",  images: [],category:null,id:"" ,price:0}; 
+  this.data= {
+        images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
+        name: '',
+        price: 0,
+        category: '',
+      };
+    this.editing = false;
+    this.adding=true;
+  }
+  edit(client:any) {
+ this.data=this.global.clientSelected;
     this.editing = true;
+    this.adding=false;
   }
   cancelarUpdate() {
     this.editing = false;
+    this.adding = false;
+    this.data= {
+      images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
+      name: '',
+      price: 0,
+      category: '',
+    };
+    this.global.clientSelected={ name: "Seleccione una autoparte",  images: [],category:null,id:"" ,price:0}; 
   }
   preview(client: any) {
     this.global.clientSelected = client;
@@ -69,7 +91,7 @@ export class ClientesComponent {
   beforeDelete(){
     Swal.fire({
 
-      title: 'Seguro deseas borrar este cliente?',
+      title: 'Seguro deseas borrar esta autoparte?',
 
       text: 'esta acción de se podrá revertir!',
 
@@ -87,9 +109,9 @@ export class ClientesComponent {
         this.deleteCliente()
         Swal.fire(
 
-          'Borrado!',
+          'Borrada!',
 
-          'El cliente ha sido borrado.',
+          'La autoparte ha sido borrada.',
 
           'success'
 
@@ -111,13 +133,50 @@ export class ClientesComponent {
 
     })
   }
+  
+  updateClient() {
+    this.data.images = this._butler.uploaderImages.length > 0 ? this._butler.uploaderImages : this.global.clientSelected.images;
 
+    
+    this.dataApiService.clientUpdate(this.data, this.global.clientSelected.id).subscribe(response => {
+      
+      console.log(response);
+      this.global.loadClientes();
+      this.editing = false;
+      this.virtualRouter.routerActive = "clientes";
+      this.data= {
+        images: [] as string[], 
+        name: '',
+        price: 0,
+        category:''
+      };
+      this._butler.uploaderImages = [];
+      this.adding=false,
+      this.editing=false,
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Autoparte Actualizada',
+        showConfirmButton: false,
+        timer: 1500
+        
+
+      });
+    });
+  }
 deleteCliente(){
+
+    this.global.deleteClient(this.global.clientSelected.id).subscribe(response =>{
+      this.global.rubroSelected={ name: "Seleccionar",  images: [] , id:"",ref:""};
+      this.global.loadClientes();
+    
+      this.global.clientSelected= { name: "Seleccione una autoparte",  images: [],category:null,id:"",price:0 }; 
+    });
   
 
 }
   onSubmit() {
-    this.data.ref = (Math.floor(Math.random() * 10000000000000)).toString();
+    // this.data.ref = (Math.floor(Math.random() * 10000000000000)).toString();
     this.data.images = this._butler.uploaderImages;
     this.dataApiService.saveClient(this.data).subscribe(response => {
       console.log(response);
@@ -126,12 +185,13 @@ deleteCliente(){
       this.data= {
         images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
         name: '',
-        ref: '',
-        idCategory: '',
+        price: 0,
+        category: '',
       };
       this.editing=false;
-      Swal.fire('Bien...', 'Cliente agregado satisfactoriamente!', 'success');
+      Swal.fire('Bien...', 'Autoparte agregada satisfactoriamente!', 'success');
         this.editing=false;
+        this.adding=false;
         this.global.loadClientes();
         this.virtualRouter.routerActive="clientes";
     });
@@ -141,12 +201,14 @@ deleteCliente(){
     this.dataApiService.getAllCategory().subscribe(response => {
       this.yeoman.categories = response;
       this.yeoman.allcategory = response;
+      this.yeoman.categories =this.yeoman.categories.items;
+      this.yeoman.allcategory= this.yeoman.allcategory.items;
       this.yeoman.allCategoriesSize = this.yeoman.categories.length;
     });
   }
 
   onCategorySelect(category: any) {
-    this.data.idCategory = "c" + category.id;
+    this.data.category = "c" + category.id;
     console.log(category.id);
   }
 
@@ -155,8 +217,8 @@ deleteCliente(){
     console.log("seleccionada: " + this.yeoman.allcategory[index].name);
     this.categorySeted = true;
     if (this.yeoman.categories !== undefined) {
-      this.data.idCategory = this.yeoman.allcategory[index].id;
-      console.log("id: " + JSON.stringify(this.data.idCategory));
+      this.data.category = this.yeoman.allcategory[index].id;
+      console.log("id: " + JSON.stringify(this.data.category));
     }
   }
 

@@ -65,12 +65,13 @@ export class DataApiService {
 
 
 	 
-	getAllCategory(){
-		const url_api = 	this.yeoman.origin.restUrl+'/api/categories';
+	getAllCategory() {
+		const url_api = this.yeoman.origin.restUrl + '/api/collections/svbCategories/records';
 		return this.http.get(url_api);
-	}
+	  }
+	  
 	getAllProducts(){
-		const url_api = this.yeoman.origin.restUrl+'/api/products';
+		const url_api = this.yeoman.origin.restUrl+'/api/collections/svbProducts/records';
 		return this.http.get(url_api);
 	}
 	getAllTestimonials(){
@@ -82,7 +83,7 @@ export class DataApiService {
 		return this.http.get(url_api);
 	}
 	getClients() {
-		const url_api = this.yeoman.origin.restUrl + '/api/clients';
+		const url_api = this.yeoman.origin.restUrl+'/api/collections/svbProducts/records';
 		return this.http.get(url_api);
 	}
 	getProduct(id: string){
@@ -128,12 +129,13 @@ export class DataApiService {
 		.pipe(map(data => data));
 	}
 
-	saveClient(client :ClientInterface){
-		const url_api=	this.yeoman.origin.restUrl+'/api/clients';
-		return this.http
-		.post<ClientInterface>(url_api, client)
-		.pipe(map(data => data));
-	}
+	saveClient(client: ClientInterface) {
+		const url_api = this.yeoman.origin.restUrl + '/api/collections/svbProducts/records';
+		return this.http.post<ClientInterface>(url_api, client).pipe(
+		  map(data => data)
+		);
+	  }
+	  
 	saveModules(client :ClientInterface){
 		const url_api=	this.yeoman.origin.restUrl+'/api/modules';
 		return this.http
@@ -168,13 +170,16 @@ export class DataApiService {
 		.put<RubroInterfaces>(url_api, car)
 		.pipe(map(data => data));
 	}
-	clientUpdate(client :ClientInterface, id: string){
-		// let token = this.authService.getToken();
-		const url_api=	this.yeoman.origin.restUrl+`/api/clients/${id}`;
-		return this.http
-		.put<CardInterface>(url_api, client)
-		.pipe(map(data => data));
-	}
+	clientUpdate(clientData: any, id: string): Observable<any> {
+		// Construir la URL de la solicitud
+		const url = `https://db.buckapi.com:8090/api/collections/svbProducts/records/${id}`;
+	
+		// Realizar la solicitud PATCH para actualizar el registro
+		return this.http.patch(url, clientData).pipe(
+		  map(response => response)
+		);
+	  }
+	  
 	testimonyUpdate(client :ClientInterface, id: string){
 		// let token = this.authService.getToken();
 		const url_api=	this.yeoman.origin.restUrl+`/api/testimonials/${id}`;

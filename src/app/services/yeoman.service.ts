@@ -44,7 +44,7 @@ export class Yeoman {
   ordersFinished:any[]=[];
   ordersNew:any[]=[];
   ordersProcessing:any[]=[];
-  origin: { name: string; restUrl: string; GQLUrl: string; } = { name: "default", restUrl: "https://db.buckapi.com:9023", GQLUrl: "<origin GQL url>" };
+  origin: { name: string; restUrl: string; GQLUrl: string; } = { name: "default", restUrl: "https://db.buckapi.com:8090", GQLUrl: "<origin GQL url>" };
   pop:Boolean=false;
   preview:any={};
   previewArticulo:any={"arnombre":""};

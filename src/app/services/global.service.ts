@@ -44,12 +44,12 @@ export class GlobalService {
   private assetmentsUrl = '';
 
   showDescriptionArray: boolean[] = [];
-  idRubroSelected = 0;
+  idCatSelected = 0;
   idProductSelected = 0;
   idClientSelected= 0;
   aside = true;
   // clientSelected:any;
-  clientSelected: {  name: string,  images: any[] } = { name: "Seleccione un cliente",  images: [],  };
+  clientSelected: { id:string, name: string,  images: any[],category:any,price:number } = { id:"",name: "Seleccione una autoparte",  images: [], category:null ,price:0};
   moduloSelected: { id:string, name: string,  images: any[] } = { name: "Seleccione un modulo",  images: [], id:"" };
   integrationSelected: { name: string,  images: any[] } = { name: "Seleccionar",  images: [] };
   rubroSelected: { id:string, name: string,  images: any[] ,ref:string} = { name: "Seleccionar",  images: [] , id:"",ref:""};
@@ -147,6 +147,17 @@ export class GlobalService {
 		.delete<RubroInterface>(url_api)
 		.pipe(map(data => data));
 	}
+  deleteClient(id: string){
+    // Suponiendo que this.yeoman.origin.restUrl tiene el valor correcto de la URL base
+    const url_api = `${this.yeoman.origin.restUrl}/api/collections/svbProducts/records/${id}`;
+  
+    // Si necesitas agregar un token de autorización, descomenta la línea a continuación
+    // const token = this.AuthRESTService.getToken();
+  
+    return this.http.delete<RubroInterface>(url_api)
+      .pipe(map(data => data));
+  }
+  
   deleteIntegration(id: string){
 		// const token = this.AuthRESTService.getToken
 		const url_api=	this.yeoman.origin.restUrl+`/api/integrations/${id}`;
@@ -183,14 +194,15 @@ export class GlobalService {
   }
   selectRubro(rubroIndex: any) {
 
-    this.clientSelected= { name: "Seleccione un cliente",  images: [] }; 
+    this.clientSelected= { name: "Seleccione una autoparte",  images: [],category:null,id:"",price:0 }; 
     this.rubroSelectedBoolean=true;
     this.clientesSelected = [];
     this.rubroIndex=rubroIndex;
-    this.idRubroSelected = this.rubros[rubroIndex].id;
+    this.idCatSelected = this.yeoman.categories[rubroIndex].id;
     let size = this.clientes.length;
     for (let i = 0; i < size; i++) {
-      if (this.clientes[i].idCategory === this.idRubroSelected) {
+      console.log("comparando" +this.clientes[i].category )
+      if (this.clientes[i].category === this.idCatSelected) {
         this.clientesSelected.push(this.clientes[i]);
       }
     }
@@ -262,11 +274,11 @@ export class GlobalService {
   loadClientes() {
     this.getClientes().subscribe(
       (data) => {
-        this.clientes = data;
+        this.clientes = data.items;
         this.totales.totalClientes=this.clientes.length;
         this.clientesSelected = this.clientes; // Asigna los registros obtenidos a la variable 'registros'
         console.log(data);
-        let size = data.length;
+        let size = data.items.length;
         
         this.conteoRubros();
         // Puedes hacer lo que quieras con los datos recibidos
@@ -343,8 +355,10 @@ export class GlobalService {
     return this.http.get<any>(this.categoriesUrl);
   }
   getClientes(): Observable<any> {
-    return this.http.get<any>(this.clientesUrl);
+    const url_api = this.yeoman.origin.restUrl + '/api/collections/svbProducts/records';
+    return this.http.get<any>(url_api);
   }
+  
   getTestimonios(): Observable<any> {
     return this.http.get<any>(this.testimoniosUrl);
   }

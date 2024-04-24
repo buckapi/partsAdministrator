@@ -35,7 +35,7 @@ export class FormatJsonComponent implements OnInit{
     },
   };
   data = {
-    img: '', 
+    image: '', 
     title: '',
     autor: '',
     body: {}  
@@ -67,7 +67,7 @@ export class FormatJsonComponent implements OnInit{
     
   }
   onSubmit() {
-    this.data.img = this._butler.uploaderImages[0];
+    this.data.image = this._butler.uploaderImages[0];
     this.data.body=this.objectFormat;
     this.dataApiService.savePost(this.data).subscribe(response => {
       console.log(response);
