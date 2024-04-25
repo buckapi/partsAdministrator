@@ -49,7 +49,28 @@ export class GlobalService {
   idClientSelected= 0;
   aside = true;
   // clientSelected:any;
-  clientSelected: { id:string, name: string,  images: any[],category:any,price:number } = { id:"",name: "Seleccione una autoparte",  images: [], category:null ,price:0};
+  clientSelected: {
+    id: string,
+    name: string,
+    images: any[],
+    category: any,
+    price: number,
+    brand: string,
+    model: string,
+    description:string,
+    year: number
+} = {
+    id: "",
+    name: "Seleccione una autoparte",
+    images: [],
+    category: null,
+    price: 0,
+    brand: "",
+    description:'',
+
+    model: "",
+    year: 0
+};
   moduloSelected: { id:string, name: string,  images: any[] } = { name: "Seleccione un modulo",  images: [], id:"" };
   integrationSelected: { name: string,  images: any[] } = { name: "Seleccionar",  images: [] };
   rubroSelected: { id:string, name: string,  images: any[] ,ref:string} = { name: "Seleccionar",  images: [] , id:"",ref:""};
@@ -194,8 +215,18 @@ export class GlobalService {
   }
   selectRubro(rubroIndex: any) {
 
-    this.clientSelected= { name: "Seleccione una autoparte",  images: [],category:null,id:"",price:0 }; 
-    this.rubroSelectedBoolean=true;
+    this.clientSelected = {
+      name: "Seleccione una autoparte",
+      images: [],
+      category: null,
+      id: "",
+      description:'',
+      price: 0,
+      brand: "",
+      model: "",
+      year: 0
+  };
+      this.rubroSelectedBoolean=true;
     this.clientesSelected = [];
     this.rubroIndex=rubroIndex;
     this.idCatSelected = this.yeoman.categories[rubroIndex].id;

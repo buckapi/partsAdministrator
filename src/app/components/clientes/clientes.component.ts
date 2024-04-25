@@ -41,9 +41,14 @@ export class ClientesComponent {
   data = {
     images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
     name: '',
-    price:0,
+    price: 0,
     category: '',
-  };
+    brand: '',
+    model: '',
+    description:'',
+    year: 0
+};
+
 
   adapter = new DemoFilePickerAdapter(this.http, this._butler)
   constructor(
@@ -58,13 +63,29 @@ export class ClientesComponent {
     this.getAllCategories();
   }
   add(){
-    this.global.clientSelected={ name: "Seleccione una autoparte",  images: [],category:null,id:"" ,price:0}; 
+    this.global.clientSelected = {
+      name: "Seleccione una autoparte",
+      images: [],
+      category: null,
+      id: "",
+      price: 0,
+      brand: "",
+      model: "",
+      description:'',
+
+      year: 0
+  };
   this.data= {
-        images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
-        name: '',
-        price: 0,
-        category: '',
-      };
+    images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
+    name: '',
+    price: 0,
+    category: '',
+    description:'',
+    brand: '',
+    model: '',
+    year: 0
+};
+
     this.editing = false;
     this.adding=true;
   }
@@ -81,8 +102,24 @@ export class ClientesComponent {
       name: '',
       price: 0,
       category: '',
-    };
-    this.global.clientSelected={ name: "Seleccione una autoparte",  images: [],category:null,id:"" ,price:0}; 
+      brand: '',
+      description:'',
+      model: '',
+      year: 0
+  };
+  
+  this.global.clientSelected = {
+    name: "Seleccione una autoparte",
+    images: [],
+    category: null,
+    id: "",
+    price: 0,
+    brand: "",
+    description:'',
+
+    model: "",
+    year: 0
+};
   }
   preview(client: any) {
     this.global.clientSelected = client;
@@ -145,11 +182,16 @@ export class ClientesComponent {
       this.editing = false;
       this.virtualRouter.routerActive = "clientes";
       this.data= {
-        images: [] as string[], 
+        images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
         name: '',
         price: 0,
-        category:''
-      };
+        category: '',
+        brand: '',
+        description:'',
+        model: '',
+        year: 0
+    };
+    
       this._butler.uploaderImages = [];
       this.adding=false,
       this.editing=false,
@@ -170,8 +212,18 @@ deleteCliente(){
       this.global.rubroSelected={ name: "Seleccionar",  images: [] , id:"",ref:""};
       this.global.loadClientes();
     
-      this.global.clientSelected= { name: "Seleccione una autoparte",  images: [],category:null,id:"",price:0 }; 
-    });
+      this.global.clientSelected = {
+        name: "Seleccione una autoparte",
+        images: [],
+        category: null,
+        id: "",
+        price: 0,
+        brand: "",
+        description:"",
+        model: "",
+        year: 0
+    };
+        });
   
 
 }
@@ -182,12 +234,17 @@ deleteCliente(){
       console.log(response);
       this.global.loadClientes();
       this._butler.uploaderImages = [];
-      this.data= {
-        images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
-        name: '',
-        price: 0,
-        category: '',
-      };
+    this.data= {
+    images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
+    name: '',
+    price: 0,
+    category: '',
+    brand: '',
+    model: '',
+    description:'',
+    year: 0
+};
+
       this.editing=false;
       Swal.fire('Bien...', 'Autoparte agregada satisfactoriamente!', 'success');
         this.editing=false;

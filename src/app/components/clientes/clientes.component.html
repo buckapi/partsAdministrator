@@ -1,6 +1,6 @@
 <section id="clientes" [hidden]="virtualRouter.routerActive!=='clientes'">
     <div class="container">
-        <h2 class="section-title wow fadeInUp" [hidden]="isEditing || adding" >Autopartes
+        <h2 class="section-title wow fadeInUp" [hidden]="isEditing || adding">Autopartes
             <span style="color: #FF4C60;" class="icon icon-plus iconB" (click)="add()"></span>
         </h2>
         <h2 class="section-title wow fadeInUp" [hidden]="!adding">Agregar autoparte
@@ -38,18 +38,19 @@
                     <h3 class="wow fadeInUp" style="padding-top: 45px;">{{global.clientSelected.name}}
                     </h3>
                     <div class="floating-content" [hidden]="global.clientSelected.images[0]==undefined">
-                        <div  style="text-align: right;">
+                        <div style="text-align: right;">
                             <span style="font-weight: 1000; font-size: 15px; color: #5e4cff;">
-                                <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-outline-dark btn-xs"  (click)="edit(global.clientSelected)"
-                                >
+                                <button type="submit" name="submit" id="submit" value="Submit"
+                                    class="btn btn-outline-dark btn-xs" (click)="edit(global.clientSelected)">
                                     <span class="icon icon-pencil"></span>
                                 </button>
                             </span>
                             <span style="font-weight: 1000; font-size: 15px; color: #FF4C60; padding-left: 5px;">
-                                <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-default btn-xs" (click)="beforeDelete()">
+                                <button type="submit" name="submit" id="submit" value="Submit"
+                                    class="btn btn-default btn-xs" (click)="beforeDelete()">
                                     <span class="icon icon-trash"></span>
                                 </button>
-                            </span> 
+                            </span>
                         </div>
 
                     </div>
@@ -63,7 +64,7 @@
                 <div class="contact-info">
                     <form>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="">
                                     <div class="">
                                         <ngx-awesome-uploader [adapter]="adapter" [captions]="captions"
@@ -72,28 +73,42 @@
                                     </div>
                                     <div style="display: flex; margin-top: 20px;padding: 4%;">
                                         <div *ngFor="let image of _butler.uploaderImages" style="margin-right: 10px;">
-                                          <img src="{{image}}" style="max-width: 50px; border-radius: 10px; border: 1px solid #ccc;">
+                                            <img src="{{image}}"
+                                                style="max-width: 50px; border-radius: 10px; border: 1px solid #ccc;">
                                         </div>
-                                      </div>
-                                      
+                                    </div>
+
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="">
-                                    <div class="">
-                                      
+                            <div class="col-md-8">
+                                <div class="row">
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Descripción</label>
+                                    <textarea class="form-control" placeholder="descripción"
+                                        [(ngModel)]="data.description" name="description" required
+                                        [ngModelOptions]="{standalone: true}"></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="event-name">Nombre </label>
+                                            <label for="event-name">Nombre</label>
                                             <input class="form-control" placeholder="nombre" type="text"
                                                 [(ngModel)]="data.name" name="name" required
                                                 [ngModelOptions]="{standalone: true}">
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="">
-                                    <div class="">
                                         <div class="form-group">
-                                            <label for="event-description">categoría</label>
+                                            <label for="brand">Marca</label>
+                                            <input class="form-control" placeholder="marca" type="text"
+                                                [(ngModel)]="data.brand" name="brand" required
+                                                [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="event-description">Categoría</label>
                                             <select id="category" class="form-control wide my-custom-select"
                                                 [(ngModel)]="category" (ngModelChange)="setCategory(category)"
                                                 [ngModelOptions]="{standalone: true}">
@@ -103,27 +118,45 @@
                                                 </option>
                                             </select>
                                         </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="model">Modelo</label>
+                                            <input class="form-control" placeholder="modelo" type="text"
+                                                [(ngModel)]="data.model" name="model" required
+                                                [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                                                               
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="">
-                                    <div class="">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="event-price">Precio</label>
                                             <input class="form-control" placeholder="precio" type="number"
                                                 [(ngModel)]="data.price" name="price" required
                                                 [ngModelOptions]="{standalone: true}">
                                         </div>
+                                        
+                                       
+                                        <div class="form-group">
+                                            <label for="year">Año</label>
+                                            <input class="form-control" placeholder="año" type="number"
+                                                [(ngModel)]="data.year" name="year" required
+                                                [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                        
                                     </div>
                                 </div>
+                                
                             </div>
-                            
+
+
+
                         </div>
                         <div class="popup-box-actions medium void" style="text-align: end;">
-                            <button  [hidden]="editing" class="btn btn-default" id="closeButton" (click)="onSubmit()" style=" margin-right: 10px;">Guardar</button>
-                            <button [hidden]="adding"class="btn btn-default" id="closeButton" (click)="updateClient()" style=" margin-right: 10px;">Guardar</button>
-                                <button class="btn btn-dark" id="closeButton" (click)="cancelarUpdate()">Cancelar</button>
+                            <button [hidden]="editing" class="btn btn-default" id="closeButton" (click)="onSubmit()"
+                                style=" margin-right: 10px;">Guardar</button>
+                            <button [hidden]="adding" class="btn btn-default" id="closeButton" (click)="updateClient()"
+                                style=" margin-right: 10px;">Guardar</button>
+                            <button class="btn btn-dark" id="closeButton" (click)="cancelarUpdate()">Cancelar</button>
                         </div>
                     </form>
                 </div>
