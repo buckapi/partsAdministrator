@@ -107,17 +107,18 @@
                                        
                                     </div>
                                     <div class="col-md-4">
+                               
                                         <div class="form-group">
-                                            <label for="event-description">Categoría</label>
-                                            <select id="category" class="form-control wide my-custom-select"
-                                                [(ngModel)]="category" (ngModelChange)="setCategory(category)"
-                                                [ngModelOptions]="{standalone: true}">
-                                                <option *ngFor="let category of yeoman.allcategory, let i = index "
-                                                    [ngValue]="i">
-                                                    <span style="cursor:pointer;">{{category.name}}</span>
-                                                </option>
-                                            </select>
-                                        </div>
+                                            <label for="category">Categoría</label>
+                                            <ng-multiselect-dropdown
+                                            [ngModelOptions]="{standalone: true}"
+                                              [placeholder]="'Selecciona una categoría'"
+                                              [data]="yeoman.allcategory"
+                                              [(ngModel)]="data.categories"
+                                              [settings]="dropdownSettings"
+                                              (onSelect)="onCategorySelect($event)">
+                                            </ng-multiselect-dropdown>
+                                          </div>
                                         
                                         <div class="form-group">
                                             <label for="model">Modelo</label>
@@ -142,7 +143,8 @@
                                                 [(ngModel)]="data.year" name="year" required
                                                 [ngModelOptions]="{standalone: true}">
                                         </div>
-                                        
+                                        <div><button type="button" class="btn btn-primary" (click)="openModal()">Colores</button>
+                                        </div>
                                     </div>
                                 </div>
                                 

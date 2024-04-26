@@ -10,6 +10,10 @@ import { DataApiService } from './../../services/data-api-service';
 import { Butler } from './../../services/butler.service';
 import { Yeoman } from './../../services/yeoman.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+
+import { ModalComponent } from '@app/components/modal/modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
@@ -17,11 +21,15 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 })
 
 export class ClientesComponent {
+  dropdownList = [];
+  selectedItems = [];
+  // dropdownSettings = {};
+  dropdownSettings: IDropdownSettings = {};
   editing = false;
   adding = false;
-  isEditing = false;
   category = 'Seleccione una';
   categorySeted: boolean = false;
+  isEditing = false;
   clients$: any = {};
   public captions: UploaderCaptions = {
     dropzone: {
@@ -43,6 +51,7 @@ export class ClientesComponent {
     name: '',
     price: 0,
     category: '',
+    categories:[] as string[],
     brand: '',
     model: '',
     description:'',
@@ -52,6 +61,7 @@ export class ClientesComponent {
 
   adapter = new DemoFilePickerAdapter(this.http, this._butler)
   constructor(
+    private modalService: NgbModal,
     public script: ScriptService,
     public virtualRouter: virtualRouter,
     public global: GlobalService,
@@ -61,6 +71,15 @@ export class ClientesComponent {
     public dataApiService: DataApiService,
   ) {
     this.getAllCategories();
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'name',
+      selectAllText: 'Seleccionar todo',
+      unSelectAllText: 'Deseleccionar todo',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
   }
   add(){
     this.global.clientSelected = {
@@ -69,6 +88,7 @@ export class ClientesComponent {
       category: null,
       id: "",
       price: 0,
+    categories:[] ,
       brand: "",
       model: "",
       description:'',
@@ -79,6 +99,8 @@ export class ClientesComponent {
     images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
     name: '',
     price: 0,
+    categories:[] as string[],
+
     category: '',
     description:'',
     brand: '',
@@ -94,6 +116,13 @@ export class ClientesComponent {
     this.editing = true;
     this.adding=false;
   }
+
+  openModal() {
+    const modalRef = this.modalService.open(ModalComponent);
+    // Puedes pasar datos al modal utilizando el método 'componentInstance' del modalRef.
+    // modalRef.componentInstance.data = myData;
+  }
+
   cancelarUpdate() {
     this.editing = false;
     this.adding = false;
@@ -101,6 +130,8 @@ export class ClientesComponent {
       images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
       name: '',
       price: 0,
+    categories:[] as string[],
+
       category: '',
       brand: '',
       description:'',
@@ -113,6 +144,8 @@ export class ClientesComponent {
     images: [],
     category: null,
     id: "",
+    categories:[] ,
+
     price: 0,
     brand: "",
     description:'',
@@ -185,6 +218,8 @@ export class ClientesComponent {
         images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
         name: '',
         price: 0,
+    categories:[] as string[],
+
         category: '',
         brand: '',
         description:'',
@@ -217,6 +252,7 @@ deleteCliente(){
         images: [],
         category: null,
         id: "",
+    categories:[] ,
         price: 0,
         brand: "",
         description:"",
@@ -238,6 +274,8 @@ deleteCliente(){
     images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
     name: '',
     price: 0,
+    categories:[] as string[],
+
     category: '',
     brand: '',
     model: '',
@@ -256,6 +294,15 @@ deleteCliente(){
   }
   getAllCategories() {
     this.dataApiService.getAllCategory().subscribe(response => {
+      this.yeoman.categories = response;
+      this.yeoman.allcategory = response;
+      this.yeoman.categories =this.yeoman.categories.items;
+      this.yeoman.allcategory= this.yeoman.allcategory.items;
+      this.yeoman.allCategoriesSize = this.yeoman.categories.length;
+    });
+  }
+  getAllBrands() {
+    this.dataApiService.getAllBrand().subscribe(response => {
       this.yeoman.categories = response;
       this.yeoman.allcategory = response;
       this.yeoman.categories =this.yeoman.categories.items;

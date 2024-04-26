@@ -29,3 +29,27 @@
     /* También puedes aplicar otros estilos además del color */
     /* Por ejemplo: background-color, tamaño de fuente, etc. */
   }
+
+
+
+
+
+/* Estilo para el campo de selección */
+.my-custom-select {
+  /* Añade tus estilos personalizados aquí */
+}
+
+/* Estilo para el campo de entrada de texto */
+.form-control {
+  /* Añade tus estilos personalizados aquí */
+  border: 1px solid #ced4da; /* Ejemplo de cómo cambiar el borde */
+  border-radius: 4px; /* Ejemplo de cómo agregar bordes redondeados */
+}
+
+/* Estilo para el campo de entrada de texto en enfoque */
+.form-control:focus {
+  /* Estilos cuando el campo está enfocado */
+  border-color: #80bdff; /* Ejemplo de cómo cambiar el color del borde cuando está enfocado */
+  outline: 0; /* Evita el borde de enfoque predeterminado */
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Ejemplo de cómo agregar una sombra cuando está enfocado */
+}

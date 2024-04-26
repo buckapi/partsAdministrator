@@ -20,6 +20,12 @@ import { ModulosComponent } from './components/modulos/modulos.component';
 import { FaqsComponent } from './components/faqs/faqs.component';
 import { IntegracionesComponent } from './components/integraciones/integraciones.component';
 import { HomeComponent } from './components/home/home.component';
+import { SettingsComponent } from '@app/components/settings/settings.component'
+import { ColorPickerModule } from 'ngx-color-picker';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from './components/modal/modal.component'
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
 @NgModule({
   bootstrap: [AppComponent],
   declarations: [
@@ -33,9 +39,12 @@ import { HomeComponent } from './components/home/home.component';
     ModulosComponent,
     IntegracionesComponent,
     FaqsComponent,
-    HomeComponent
+    HomeComponent,
+    SettingsComponent,
+    ModalComponent
   ],
   imports: [
+    ColorPickerModule,
     HttpClientModule,
     BrowserModule,
     FilePickerModule,
@@ -43,6 +52,7 @@ import { HomeComponent } from './components/home/home.component';
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
+    NgMultiSelectDropDownModule,
     QuillModule.forRoot({
       customModules: [{
         implementation: Counter,
@@ -54,7 +64,8 @@ import { HomeComponent } from './components/home/home.component';
       }]
     }),
     MatQuillModule,
-    ChildModule
+    ChildModule,
+    NgbModule
   ],
   providers: [],
   schemas: [NO_ERRORS_SCHEMA]

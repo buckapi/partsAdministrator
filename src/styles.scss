@@ -168,3 +168,6 @@ app-root > div > * {
     z-index: 1;
   }
 }
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';

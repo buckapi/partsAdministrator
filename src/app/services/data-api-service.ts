@@ -8,6 +8,8 @@ import { RubroInterface } from './global.service';
 
 export interface UserInterface {
 }
+export interface ColorInterface {
+}
 export interface OrderInterface {
 }
 export interface PartInterface {
@@ -37,6 +39,8 @@ export interface CardInterface {
 })
 export class DataApiService {
 	//ticket: Observable<any>;
+	private baseUrl = 'https://db.buckapi.com:8090/api';
+
 	url:any;
 	cards:any;
 	orders:any;
@@ -67,6 +71,10 @@ export class DataApiService {
 	 
 	getAllCategory() {
 		const url_api = this.yeoman.origin.restUrl + '/api/collections/svbCategories/records';
+		return this.http.get(url_api);
+	  }
+	  getAllBrand(){
+		const url_api = this.yeoman.origin.restUrl + '/api/collections/svbBrands/records';
 		return this.http.get(url_api);
 	  }
 	  
@@ -136,6 +144,13 @@ export class DataApiService {
 		);
 	  }
 	  
+	  saveColor(color: ColorInterface) {
+		const url_api = this.yeoman.origin.restUrl + '/api/collections/svbColors/records';
+		return this.http.post<ColorInterface>(url_api, color).pipe(
+		  map(data => data)
+		);
+	  }
+	  
 	saveModules(client :ClientInterface){
 		const url_api=	this.yeoman.origin.restUrl+'/api/modules';
 		return this.http
@@ -170,6 +185,16 @@ export class DataApiService {
 		.put<RubroInterfaces>(url_api, car)
 		.pipe(map(data => data));
 	}
+	updateColor(colorData: any, id: string): Observable<any> {
+		const url = `https://db.buckapi.com:8090/api/collections/svbConfig/records/${id}`;
+		return this.http.patch(url, colorData).pipe(
+		  map(response => response)
+		);
+	  }
+	  updateRecord(recordId: string, data: any): Observable<any> {
+		const url = `${this.baseUrl}/collections/svbConfig/records/${recordId}`;
+		return this.http.patch<any>(url, data);
+	  }
 	clientUpdate(clientData: any, id: string): Observable<any> {
 		// Construir la URL de la solicitud
 		const url = `https://db.buckapi.com:8090/api/collections/svbProducts/records/${id}`;

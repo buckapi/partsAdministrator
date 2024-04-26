@@ -1,0 +1,27 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Mis colores</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="color-circle" *ngFor="let color of global.colors" [style.background-color]="color.hex">
+          {{ color.name }}
+        </div>
+        <div [hidden]="!sending">
+          enviando, por favor espere ...
+        </div>
+        <div class="color-picker-container" [hidden]="!adding || sending ">
+          <input [(colorPicker)]="color" [style.background]="color" class="circular-color-picker"/>
+          <input type="text" [(ngModel)]="nuevoColor" placeholder="Nombre del color"> <!-- Campo de texto para el nombre -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="guardarColor()">Guardar</button>
+      </div>
+    </div>
+  </div>
+  

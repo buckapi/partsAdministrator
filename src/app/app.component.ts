@@ -9,7 +9,6 @@ const block = parchment.query('block')
 block.tagName = 'DIV'
 // or class NewBlock extends Block {} NewBlock.tagName = 'DIV'
 Quill.register(block /* or NewBlock */, true)
-
 @Component({
   selector: 'app-root',
   styleUrls: ['./app.component.css'],
@@ -30,18 +29,31 @@ export class AppComponent implements  OnInit{
     public virtualRouter: virtualRouter,
     public global: GlobalService
   ) {
+    this.global.getConfig().subscribe(
+      (data) => {
+        this.global.configs = data;
+        console.log("id"+data)
+        console.log("colors"+this.global.configs[0])
+         // Asigna los registros obtenidos a la variable 'registros'
+        // console.log(data); // respuesta
+      },
+      (error) => {
+        console.error(error); // Manejo de errores si la solicitud falla
+      }
+    );
     const scriptNames = ScriptStore.map(script => script.name);
 
 
     this.script.load(...scriptNames).then(() => {
       setTimeout(() => {
-        this.global.loadSoluciones();
-        this.global.loadRubros();
+        // this.global.loadSoluciones();
+        // this.global.loadRubros();
         this.global.loadClientes();
-        this.global.loadTestimonios();
-        this.global.loadIntegrations();
-        this.global.loadModulos();
-        this.global.loadPosts();
+        this.global.loadColors();
+        // this.global.loadTestimonios();
+        // this.global.loadIntegrations();
+        // this.global.loadModulos();
+        // this.global.loadPosts();
         // this.epicFunction();
       }, 2000);
     }).catch(error => {
