@@ -46,7 +46,7 @@
 		<!-- logo image -->
 		<div (click)="goHome()"  class="site-logo" style="cursor:pointer;">
 			<a >
-				<img src="assets/images/logo-dark.svg" alt="Bolby" />
+				<img src="assets/images/logoBlue.webp" alt="Bolby" />
 			</a>
 		</div>
 	</div>
@@ -58,7 +58,7 @@
 	<!-- logo image -->
 	<div (click)="goHome()" class="site-logo" style="cursor:pointer;">
 		<a >
-			<img src="assets/images/logo-dark.svg" alt="Bolby" />
+			<img src="assets/images/logoBlue.webp" alt="Bolby" />
 		</a>
 	</div>
 
@@ -70,6 +70,7 @@
 			<!-- <li><a href="#soluciones" (click)="global.setRoute('soluciones')"><i class="icon-graduation" ></i>Soluciones</a></li> -->
 			<!-- <li><a href="#modulos" (click)="global.setRoute('modulos')"> <i class="icon-briefcase"></i>Modulos</a></li> -->
 			<li><a href="#autopattes" (click)="global.setRoute('clientes')"><i class="icon icon-layers"></i>Autopartes</a></li>	
+			<li><a href="#ordenes" (click)="global.setRoute('orders')"><i class="icon icon-layers"></i>Ventas</a></li>	
       <!-- <li><a href="#testimonios" (click)="global.setRoute('testimonios')"><i class="icon-bubbles"></i>Testimonios</a></li> -->
 			<!-- <li><a href="#integraciones" (click)="global.setRoute('integraciones')"><i class="icon-directions"></i>Integraciones</a></li> -->
 			<!-- <li><a href="#blog" (click)="global.setRoute('blog')"><i class="icon-note"></i>Blog</a></li> -->
@@ -81,6 +82,7 @@
 	<div class="footer">
 		<!-- copyright text -->
 		<span class="copyright">© 2024 by Buckapi.com</span>
+    <span style="color:#FF4C60; cursor: pointer;"> Salir</span>
 	</div>
 
 </header>
@@ -196,6 +198,7 @@
   <!-- <app-settings></app-settings> -->
    <app-home></app-home>
   <app-clientes></app-clientes>
+  <app-orders [hidden]="virtualRouter.routerActive!=='orders'"></app-orders>
   <app-rubros></app-rubros>
   <app-testimonios></app-testimonios>
   <app-soluciones></app-soluciones>

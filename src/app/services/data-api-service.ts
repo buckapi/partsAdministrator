@@ -4,11 +4,12 @@ import { forkJoin, Observable,of } from 'rxjs';
 import { map,mergeMap } from 'rxjs/operators';
 import { Yeoman } from './yeoman.service';
 import { AuthRESTService } from "./auth-rest.service";
-import { RubroInterface } from './global.service';
+import { CategoryInterface, RubroInterface } from './global.service';
 
 export interface UserInterface {
 }
 export interface ColorInterface {
+}export interface BrandInterface {
 }
 export interface OrderInterface {
 }
@@ -150,6 +151,18 @@ export class DataApiService {
 		  map(data => data)
 		);
 	  }
+	  saveBrand( brand: BrandInterface) {
+		const url_api = this.yeoman.origin.restUrl + '/api/collections/svbBrands/records';
+		return this.http.post<BrandInterface>(url_api, brand).pipe(
+		  map(data => data)
+		);
+	  }
+	  saveCategory( category: CategoryInterface) {
+		const url_api = this.yeoman.origin.restUrl + '/api/collections/svbCategories/records';
+		return this.http.post<CategoryInterface>(url_api, category).pipe(
+		  map(data => data)
+		);
+	  }
 	  
 	saveModules(client :ClientInterface){
 		const url_api=	this.yeoman.origin.restUrl+'/api/modules';
@@ -163,12 +176,12 @@ export class DataApiService {
 		.post<ClientInterface>(url_api, client)
 		.pipe(map(data => data));
 	}
-	saveCategory(client :ClientInterface){
-		const url_api=	this.yeoman.origin.restUrl+'/api/categories';
-		return this.http
-		.post<ClientInterface>(url_api, client)
-		.pipe(map(data => data));
-	}
+	// saveCategory(client :ClientInterface){
+	// 	const url_api=	this.yeoman.origin.restUrl+'/api/categories';
+	// 	return this.http
+	// 	.post<ClientInterface>(url_api, client)
+	// 	.pipe(map(data => data));
+	// }
 	saveFaqs(client :ClientInterface){
 		const url_api=	this.yeoman.origin.restUrl+'/api/faqs';
 		return this.http

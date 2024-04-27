@@ -4,6 +4,8 @@ import { virtualRouter } from './services/virtualRouter.service'; // Asegúrate 
 import { GlobalService } from './services/global.service'; // Asegúrate de que la ruta sea correcta
 import { ScriptService } from './services/script.service';
 import { ScriptStore } from './services/script.store';
+
+import { DeviceDetectorService } from 'ngx-device-detector';
 const parchment = Quill.import('parchment')
 const block = parchment.query('block')
 block.tagName = 'DIV'
@@ -20,15 +22,21 @@ export class AppComponent implements  OnInit{
 
   showContent: boolean = false;
   title = 'admin-v17';
+  currentDate: Date = new Date();
+  latitude: number;
+  longitude: number;
 
   deviceInfo: any = null
   // title = 'ngx-quill-example'
   constructor(
-    // private deviceService: DeviceDetectorService,
+     private deviceService: DeviceDetectorService,
     public script: ScriptService,
     public virtualRouter: virtualRouter,
     public global: GlobalService
   ) {
+    const deviceInfo = this.deviceService.getDeviceInfo();
+    console.log("device info: "+JSON.stringify(deviceInfo)); 
+
     this.global.getConfig().subscribe(
       (data) => {
         this.global.configs = data;
@@ -81,7 +89,13 @@ export class AppComponent implements  OnInit{
     setTimeout(() => {
       this.showContent = true;
     }, 2000); // 5000 milliseconds = 5 seconds
-
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        console.log("Coordenadas: Long. "+this.longitude+"° , Lat. "+this.latitude +"°");
+      });
+    }
     // this.animatePercentage();
     // this.epicFunction();
   }

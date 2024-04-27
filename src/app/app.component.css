@@ -63,3 +63,31 @@
     margin-right: 0;
   }
   
+  .btn-default {
+    color: #FFF;
+    background: #FF4C60;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  }
+  .btn-default:hover {
+    color: #FFF;
+    -webkit-animation-name: button-push;
+    animation-name: button-push;
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+  }
+  .multiselect-dropdown .dropdown-btn .selected-item-container .selected-item {
+    background: #FF4C60 !important;
+  }
+  .selected-item {
+    background: #FF4C60 !important;
+  }

@@ -25,6 +25,9 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from './components/modal/modal.component'
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { OrdersComponent} from '@app/components/orders/orders.component'
+import { AddbrandComponent} from '@app/components/addbrand/addbrand.component'
+import { AddcategoryComponent} from '@app/components/addcategory/addcategory.component'
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -41,7 +44,11 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     FaqsComponent,
     HomeComponent,
     SettingsComponent,
-    ModalComponent
+    ModalComponent,
+    OrdersComponent,
+    AddbrandComponent,
+    AddcategoryComponent
+
   ],
   imports: [
     ColorPickerModule,
@@ -68,6 +75,6 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     NgbModule
   ],
   providers: [],
-  schemas: [NO_ERRORS_SCHEMA]
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class AppModule { }

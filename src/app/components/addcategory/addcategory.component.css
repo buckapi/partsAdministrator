@@ -1,5 +1,5 @@
 
-  .circular-color-picker {
+.circular-color-picker {
     width: 100%; /* El ancho del input es igual al ancho del contenedor */
     height: 100%; /* El alto del input es igual al alto del contenedor */
     border-radius: 50%;
