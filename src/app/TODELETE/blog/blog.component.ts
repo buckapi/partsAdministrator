@@ -1,14 +1,14 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { virtualRouter } from './../../services/virtualRouter.service'; // Asegúrate de que la ruta sea correcta
-import { GlobalService } from './../../services/global.service'; // Asegúrate de que la ruta sea correcta
-import { ScriptService } from './../../services/script.service';
-import { ScriptStore } from './../../services/script.store';
+import { virtualRouter } from '../../services/virtualRouter.service'; // Asegúrate de que la ruta sea correcta
+import { GlobalService } from '../../services/global.service'; // Asegúrate de que la ruta sea correcta
+import { ScriptService } from '../../services/script.service';
+import { ScriptStore } from '../../services/script.store';
 import { HttpClient } from '@angular/common/http';
 import { UploaderCaptions } from 'ngx-awesome-uploader';
-import { DemoFilePickerAdapter } from '../file-picker.adapter';
-import { DataApiService } from './../../services/data-api-service';
-import { Butler } from './../../services/butler.service';
-import { Yeoman } from './../../services/yeoman.service';
+import { DemoFilePickerAdapter } from '../../components/file-picker.adapter';
+import { DataApiService } from '../../services/data-api-service';
+import { Butler } from '../../services/butler.service';
+import { Yeoman } from '../../services/yeoman.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({

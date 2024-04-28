@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { virtualRouter } from './../../services/virtualRouter.service'; 
-import { GlobalService } from './../../services/global.service'; 
-import { ScriptService } from './../../services/script.service';
+import { virtualRouter } from '../../services/virtualRouter.service'; 
+import { GlobalService } from '../../services/global.service'; 
+import { ScriptService } from '../../services/script.service';
 import { UploaderCaptions } from 'ngx-awesome-uploader';
-import { DemoFilePickerAdapter } from  './../file-picker.adapter';
+import { DemoFilePickerAdapter } from  '../../components/file-picker.adapter';
 import { Butler } from '@app/services/butler.service';
 import { HttpClient } from '@angular/common/http';
 import { DataApiService } from '@app/services/data-api-service';

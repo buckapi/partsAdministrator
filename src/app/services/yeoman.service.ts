@@ -12,6 +12,7 @@ export class Yeoman {
   posts:any=[];
   categories:any=[];
   brands:any=[];
+  types:any=[];
 
   all:any=[];
   articulos:any[][]=[];

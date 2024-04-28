@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { virtualRouter } from './../../services/virtualRouter.service';
-import { GlobalService } from './../../services/global.service';
-import { ScriptService } from './../../services/script.service';
+import { virtualRouter } from '../../services/virtualRouter.service';
+import { GlobalService } from '../../services/global.service';
+import { ScriptService } from '../../services/script.service';
 import { UploaderCaptions } from 'ngx-awesome-uploader';
-import { DemoFilePickerAdapter } from './../file-picker.adapter';
-import { Butler } from './../../services/butler.service';
+import { DemoFilePickerAdapter } from '../../components/file-picker.adapter';
+import { Butler } from '../../services/butler.service';
 import { HttpClient } from '@angular/common/http';
-import { DataApiService } from './../../services/data-api-service';
+import { DataApiService } from '../../services/data-api-service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 @Component({
   selector: 'app-modulos',

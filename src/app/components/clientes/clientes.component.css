@@ -96,3 +96,22 @@
 .selected-item {
   background: #FF4C60 !important;
 }
+.delete-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: red;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  cursor: pointer;
+}
+.delete-button:hover {
+  background-color: darkred;
+}

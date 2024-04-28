@@ -1,22 +1,23 @@
-import { Component } from '@angular/core';
-import { virtualRouter } from './../../services/virtualRouter.service'; // Asegúrate de que la ruta sea correcta
-import { GlobalService } from './../../services/global.service'; // Asegúrate de que la ruta sea correcta
-import { ScriptService } from './../../services/script.service';
-import { ScriptStore } from './../../services/script.store';
-import { HttpClient } from '@angular/common/http';
-import { UploaderCaptions } from 'ngx-awesome-uploader';
-import { DemoFilePickerAdapter } from '../file-picker.adapter';
-import { DataApiService } from './../../services/data-api-service';
-import { Butler } from './../../services/butler.service';
-import { Yeoman } from './../../services/yeoman.service';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
-import { AddbrandComponent } from '../addbrand/addbrand.component';
-import { AddcategoryComponent } from '../addcategory/addcategory.component';
-import { ModalComponent } from '@app/components/modal/modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { Component } from "@angular/core";
+import { virtualRouter } from "./../../services/virtualRouter.service"; // Asegúrate de que la ruta sea correcta
+import { GlobalService } from "./../../services/global.service"; // Asegúrate de que la ruta sea correcta
+import { ScriptService } from "./../../services/script.service";
+import { ScriptStore } from "./../../services/script.store";
+import { HttpClient } from "@angular/common/http";
+import { UploaderCaptions } from "ngx-awesome-uploader";
+import { CustomFilePickerAdapter } from "../file-picker.adapter";
+import { DataApiService } from "./../../services/data-api-service";
+import { Butler } from "./../../services/butler.service";
+import { Yeoman } from "./../../services/yeoman.service";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import { AddbrandComponent } from "../addbrand/addbrand.component";
+import { AddcategoryComponent } from "../addcategory/addcategory.component";
+import { ModalComponent } from "@app/components/modal/modal.component";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { IDropdownSettings } from "ng-multiselect-dropdown";
+import { NgxImageCompressService } from "ngx-image-compress";
 // import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { ImageUploadService } from '@app/services/image-upload.service';
 @Component({
   selector: "app-clientes",
   templateUrl: "./clientes.component.html",
@@ -25,8 +26,13 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 })
 export class ClientesComponent {
   dropdownList = [];
+  imgResultsAfterCompression=[];
+  imgResultsBeforeCompression=[];
   selectedItems = [];
   showColors: boolean = true; // Agrega la propiedad 'showColors' al componente y dale un valor inicial de false
+// Dentro de tu componente Angular
+
+showDeleteButton: boolean = false;
 
   // dropdownSettings = {};
   dropdownSettings: IDropdownSettings = {};
@@ -52,21 +58,32 @@ export class ClientesComponent {
     },
   };
   data = {
-    images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
-    name: "",
-    price: 0,
+    brand: [] as any[],
+    dimensions: [] as any[],
     category: "",
     categories: [] as any[],
-    brand: [] as any[],
     colors: [] as any[],
-    model: "",
     description: "",
-    year: 0,
+    images: [] as string[],
+    model: "",
+    name: "",
+    price: 0,
+    stockLevel: 0,
+    stockMin: 0,
+    type: [] as any[],
+    status: "",
+    year: "",
   };
 
-  adapter = new DemoFilePickerAdapter(this.http, this._butler);
+  // adapter = new CustomFilePickerAdapter(this.http, this._butler);
+  adapter = new CustomFilePickerAdapter(this.http,this._butler,this.global);
+  imgResult: string = '';
+  imgResultAfterCompression: string = '';
+  imgResultBeforeCompression: string = '';
   constructor(
+    private imageUploadService: ImageUploadService,
     private modalService: NgbModal,
+    public imageCompress:NgxImageCompressService,
     public script: ScriptService,
     public virtualRouter: virtualRouter,
     public global: GlobalService,
@@ -75,6 +92,8 @@ export class ClientesComponent {
     public yeoman: Yeoman,
     public dataApiService: DataApiService
   ) {
+
+    
     this.getAllCategories();
     this.getAllBrands();
     this.dropdownSettings = {
@@ -87,6 +106,21 @@ export class ClientesComponent {
       allowSearchFilter: true,
     };
   }
+//   compressFile() {
+//     this.imageCompress.uploadFile().then(({image, orientation}) => {
+//         this.imgResultBeforeCompression = image;
+//         console.log('Size in bytes of the uploaded image was:', this.imageCompress.byteCount(image));
+
+//         this.imageCompress
+//             .compressFile(image, orientation, 50, 50) // 50% ratio, 50% quality
+//             .then(compressedImage => {
+//                 this.imgResultAfterCompression = compressedImage;
+//                 console.log('Size in bytes after compression is now:', this.imageCompress.byteCount(compressedImage));
+//             });
+//     });
+// }
+
+
   toggleColor(color: any) {
     const index = this.data.colors.findIndex((c) => c.hex === color.hex);
     if (index === -1) {
@@ -98,7 +132,7 @@ export class ClientesComponent {
     }
   }
   isChecked(): boolean {
-    if (this.data.colors.length > 0 && this.editing) {
+    if (this.data.colors.length > 0 && this.global.editingProduct) {
       this.showColors = !this.showColors;
       return this.data.colors.length > 0;
     } else {
@@ -113,40 +147,48 @@ export class ClientesComponent {
 
   add() {
     this.global.clientSelected = {
-      name: "Seleccione una autoparte",
-      images: [],
-      category: null,
-      id: "",
-      price: 0,
-      categories: [],
-      brand: [],
-      colors: [],
-      model: "",
+      brand: [] as any[],
+      dimensions: [] as any[],
+      category: "",
+      categories: [] as any[],
+      colors: [] as any[],
       description: "",
-
-      year: 0,
+   type: [] as any[],
+      stockLevel: 0,
+      stockMin: 0,
+      id: "",
+      images: [],
+      model: "",
+      name: "Seleccione una autoparte",
+      price: 0,
+      status: "",
+      year: "",
     };
     this.data = {
-      images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
+      brand: [] as any[],
+      dimensions: [] as any[],
+      categories: [] as any[],
+      category: "",
+      colors: [] as any[],
+      description: "",
+   type: [] as any[],
+      stockLevel: 0,
+      stockMin: 0,
+      images: [] as string[],
+      model: "",
       name: "",
       price: 0,
-      categories: [] as any[],
-
-      category: "",
-      description: "",
-      brand: [] as any[],
-      colors: [] as any[],
-      model: "",
-      year: 0,
+      status: "",
+      year: "",
     };
 
-    this.editing = false;
-    this.adding = true;
+    this.global.editingProduct = false;
+    this.global.addingProduct = true;
   }
   edit(client: any) {
     this.data = this.global.clientSelected;
-    this.editing = true;
-    this.adding = false;
+    this.global.editingProduct = true;
+    this.global.addingProduct = false;
   }
 
   openModal() {
@@ -156,47 +198,56 @@ export class ClientesComponent {
   }
   openAddbrand() {
     const modalRef = this.modalService.open(AddbrandComponent);
-    
+
     // Puedes pasar datos al modal utilizando el método 'componentInstance' del modalRef.
     // modalRef.componentInstance.data = myData;
   }
   openAddcategory() {
     const modalRef = this.modalService.open(AddcategoryComponent);
-    
+
     // Puedes pasar datos al modal utilizando el método 'componentInstance' del modalRef.
     // modalRef.componentInstance.data = myData;
   }
 
   cancelarUpdate() {
-    this.editing = false;
-    this.adding = false;
+    this.global.editingProduct = false;
+    this.global.addingProduct = false;
     this.data = {
-      images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
-      name: "",
-      price: 0,
-      categories: [] as any[],
-
-      category: "",
       brand: [] as any[],
+      dimensions : []as any[],
+      category: "",
+      categories: [] as any[],
       colors: [] as any[],
       description: "",
+   type: [] as any[],
+      stockLevel: 0,
+      stockMin: 0,
+      images: [] as string[],
       model: "",
-      year: 0,
+      name: "",
+      price: 0,
+      status: "",
+      year: "",
+      
     };
 
     this.global.clientSelected = {
-      name: "Seleccione una autoparte",
-      images: [],
+      brand: [],
+      dimensions: [],
       category: null,
-      id: "",
       categories: [],
       colors: [],
-      price: 0,
-      brand: [],
       description: "",
-
+      id: "",
+      images: [],
+      type: [],
       model: "",
-      year: 0,
+      name: "Seleccione una autoparte",
+      price: 0,
+      stockLevel: 0,
+      stockMin: 0,
+      status: "",
+      year: "",
     };
   }
   preview(client: any) {
@@ -205,35 +256,18 @@ export class ClientesComponent {
   }
   beforeDelete() {
     Swal.fire({
-      title: "Seguro deseas borrar esta autoparte?",
-
-      text: "esta acción de se podrá revertir!",
-
-      icon: "warning",
-
-      showCancelButton: true,
-
-      confirmButtonText: "Sí, bórralo!",
-
       cancelButtonText: "No, mejor no",
+      confirmButtonText: "Sí, bórralo!",
+      icon: "warning",
+      showCancelButton: true,
+      text: "esta acción de se podrá revertir!",
+      title: "Seguro deseas borrar esta autoparte?",
     }).then((result) => {
       if (result.value) {
         this.deleteCliente();
-        Swal.fire(
-          "Borrada!",
-
-          "La autoparte ha sido borrada.",
-
-          "success"
-        );
+        Swal.fire("Borrada!", "La autoparte ha sido borrada.", "success");
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          "Cancelado",
-
-          "",
-
-          "error"
-        );
+        Swal.fire("Cancelado", "", "error");
       }
     });
   }
@@ -249,25 +283,29 @@ export class ClientesComponent {
       .subscribe((response) => {
         console.log(response);
         this.global.loadClientes();
-        this.editing = false;
+        this.global.editingProduct = false;
         this.virtualRouter.routerActive = "clientes";
         this.data = {
-          images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
-          name: "",
-          price: 0,
-          categories: [] as any[],
-
-          category: "",
           brand: [] as any[],
+          dimensions: [] as any[],
+          category: "",
+          categories: [] as any[],
           colors: [] as any[],
           description: "",
+          images: [] as string[],
           model: "",
-          year: 0,
+          name: "",
+          price: 0,
+          type: [] as any[],
+          stockLevel: 0,
+          stockMin: 0,
+          status: "",
+          year: "",
         };
 
         this._butler.uploaderImages = [];
-        (this.adding = false),
-          (this.editing = false),
+        (this.global.addingProduct = false),
+          (this.global.editingProduct = false),
           Swal.fire({
             position: "center",
             icon: "success",
@@ -290,45 +328,55 @@ export class ClientesComponent {
         this.global.loadClientes();
 
         this.global.clientSelected = {
-          name: "Seleccione una autoparte",
-          images: [],
+          brand: [],
+          dimensions: [],
           category: null,
-          id: "",
           categories: [],
           colors: [],
-          price: 0,
-          brand: [],
           description: "",
+          id: "",
+          images: [],
           model: "",
-          year: 0,
+          name: "Seleccione una autoparte",
+          price: 0,
+          type: [] as any[],
+          stockLevel: 0,
+          stockMin: 0,
+          status: "",
+          year: "",
         };
       });
   }
   onSubmit() {
     // this.data.ref = (Math.floor(Math.random() * 10000000000000)).toString();
     this.data.images = this._butler.uploaderImages;
+    this.data.status = "active";
     this.dataApiService.saveClient(this.data).subscribe((response) => {
       console.log(response);
       this.global.loadClientes();
       this._butler.uploaderImages = [];
       this.data = {
-        images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
+        brand: [] as any[],
+        dimensions: [] as any[],
+        category: "",
+        categories: [] as any[],
+        colors: [] as any[],
+        description: "",
+        images: [] as string[],
+        model: "",
         name: "",
         price: 0,
-        categories: [] as any[],
-
-        category: "",
-        brand: [] as any[],
-        colors: [] as any[],
-        model: "",
-        description: "",
-        year: 0,
+        type: [] as any[],
+        stockLevel: 0,
+        stockMin: 0,
+        status: "",
+        year: "",
       };
 
-      this.editing = false;
+      this.global.editingProduct = false;
       Swal.fire("Bien...", "Autoparte agregada satisfactoriamente!", "success");
-      this.editing = false;
-      this.adding = false;
+      this.global.editingProduct = false;
+      this.global.addingProduct = false;
       this.global.loadClientes();
       this.virtualRouter.routerActive = "clientes";
     });

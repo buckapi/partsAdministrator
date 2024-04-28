@@ -5,7 +5,7 @@ import { ScriptService } from './../../services/script.service';
 import { Butler } from '@app/services/butler.service';
 import { DataApiService } from '@app/services/data-api-service';
 import { HttpClient } from '@angular/common/http';
-import { DemoFilePickerAdapter } from './../file-picker.adapter';
+import { DemoFilePickerAdapter } from '../file-picker.adapter';
 import { UploaderCaptions } from 'ngx-awesome-uploader';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 

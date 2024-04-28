@@ -1,9 +1,9 @@
 import { Component ,ViewChild,CUSTOM_ELEMENTS_SCHEMA, OnInit} from '@angular/core';
 import { QuillModule } from 'ngx-quill';
 import { ElementRef } from '@angular/core';
-import { virtualRouter } from './../../services/virtualRouter.service'; // Asegúrate de que la ruta sea correcta
-import { GlobalService } from './../../services/global.service'; // Asegúrate de que la ruta sea correcta
-import { ScriptService } from './../../services/script.service';
+import { virtualRouter } from '../../services/virtualRouter.service'; // Asegúrate de que la ruta sea correcta
+import { GlobalService } from '../../services/global.service'; // Asegúrate de que la ruta sea correcta
+import { ScriptService } from '../../services/script.service';
 @Component({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   selector: 'app-add-post',

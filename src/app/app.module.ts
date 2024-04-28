@@ -8,17 +8,13 @@ import Counter from './counter'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatQuillModule } from './mat-quill/mat-quill-module'
-import { FormatJsonComponent } from './components/format-json/format-json.component'
+
 import { HttpClientModule } from '@angular/common/http';
 import {ClientesComponent} from './components/clientes/clientes.component'
-import {TestimoniosComponent} from './components/testimonios/testimonios.component'
-import {SolucionesComponent} from './components/soluciones/soluciones.component'
-import {RubrosComponent} from './components/rubros/rubros.component'
+
 import { FilePickerModule } from  'ngx-awesome-uploader';
-import { BlogComponent } from './components/blog/blog.component';
-import { ModulosComponent } from './components/modulos/modulos.component';
-import { FaqsComponent } from './components/faqs/faqs.component';
-import { IntegracionesComponent } from './components/integraciones/integraciones.component';
+
+// import { IntegracionesComponent } from './components/integraciones/integraciones.component';
 import { HomeComponent } from './components/home/home.component';
 import { SettingsComponent } from '@app/components/settings/settings.component'
 import { ColorPickerModule } from 'ngx-color-picker';
@@ -33,15 +29,15 @@ import { AddcategoryComponent} from '@app/components/addcategory/addcategory.com
   bootstrap: [AppComponent],
   declarations: [
     AppComponent,
-    FormatJsonComponent,
+    // FormatJsonComponent,
     ClientesComponent,
-    TestimoniosComponent,
-    RubrosComponent,
-    SolucionesComponent,
-    BlogComponent,
-    ModulosComponent,
-    IntegracionesComponent,
-    FaqsComponent,
+    // TestimoniosComponent,
+    // RubrosComponent,
+    // SolucionesComponent,
+    // BlogComponent,
+    // ModulosComponent,
+    // IntegracionesComponent,
+    // FaqsComponent,
     HomeComponent,
     SettingsComponent,
     ModalComponent,
